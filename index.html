@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js" defer></script>
+    <link rel="stylesheet" href="style.css">
     <title>Webhook Killer</title>
 </head>
 <body>
     <div class="container">
         <div class="textdisplay">Paste the webhook link you would like to kill:</div>
         <div class="input"><input type="text" id="webhooklink" placeholder="https://discord.com/api/webhooks/"></div>
+        <button class="sendbutton" id="sendbutton">Send request</button>
         <div class="responsedata" id="responsedata" style="display: none;">Awaiting response...</div>
     </div>
 </body>
