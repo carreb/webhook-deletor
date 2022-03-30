@@ -51,7 +51,7 @@ async function webhookRequest() {
         if (response.status == 204) {
             responsetext.innerHTML = 'Successfully deleted'
         } else {
-            responsetext.innerHTML = 'Failed to delete'
+            responsetext.innerHTML = 'Failed to delete - Error ' + response.status + ' ' + response.statusText
         }
     })
     .catch(error => {
