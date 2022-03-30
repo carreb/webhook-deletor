@@ -72,3 +72,8 @@ body {
     text-align: center;
     color: #ffffff;
 }
+
+.responsedata {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
