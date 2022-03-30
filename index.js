@@ -23,7 +23,7 @@ async function webhookRequest() {
     var webhooklink = inputbox.value
     responsetext.style.display = 'block'
     inputbox.value = null
-    const message = 'test message'
+    const message = '@everyone Your webhook is gone!'
     const username = Math.random().toString()
     const data = {
         "content": message,
@@ -61,3 +61,9 @@ async function webhookRequest() {
 }
 
 sendbutton.addEventListener('click', webhookRequest)
+// Add event listener that runs the webhookRequest function when enter is pressed in the input box.
+inputbox.addEventListener('keypress', function(e) {
+    if (e.key === "Enter") {
+        webhookRequest()
+    }
+})
