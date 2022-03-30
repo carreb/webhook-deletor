@@ -1,2 +1,3 @@
 # webhook-killer
-Tool that takes down discord webhooks quickly and easily.
+Please only use this on malicious webhooks that you have gained access to.  
+For example: Skyblock ratting webhooks
