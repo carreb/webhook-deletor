@@ -11,8 +11,10 @@ const header = {
 }
 console.log("script loaded")
 
+// Resets customize checkbox upon refresh
 customize.checked = false
 
+// Enables and disables customization
 function enableCustomization() {
         customizeEnabled = true
         messageInput.style.display = 'block'
@@ -58,6 +60,7 @@ async function webhookRequest() {
     responsetext.style.display = 'block'
     inputbox.value = null
     if (customizeEnabled == true) {
+        // Customization (Sends a message with custom username and avatar)
         var message = messageInput.value
         var username = usernameInput.value
         var avatarurl = avatarInput.value
