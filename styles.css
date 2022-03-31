@@ -96,7 +96,11 @@ body {
 .smallinput:focus {
     border-color: gray;
 }
+
+.checkdiv {
+    text-align: center;
+}
+
 .checkbox {
-    float: left;
     margin-bottom: 0.5rem;
 }
