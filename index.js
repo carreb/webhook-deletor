@@ -103,7 +103,6 @@ async function webhookRequest() {
         console.log(error)
     })
 
-    console.log("end")
 }
 
 sendbutton.addEventListener('click', webhookRequest)
