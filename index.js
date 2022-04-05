@@ -5,6 +5,7 @@ const customize = document.getElementById('customize')
 const messageInput = document.getElementById('whMessage')
 const usernameInput = document.getElementById('whUsername')
 const avatarInput = document.getElementById('whAvatarUrl')
+const webhookType = document.getElementById('webhookType')
 var customizeEnabled = false
 const header = {
     "Content-Type": "application/json",
@@ -50,58 +51,91 @@ async function getID() {
 
 async function webhookRequest() {
     // Sets up for the webhook request
-    console.log('submitted')
-    let webhookdata = await getID()
-    var webhookid = webhookdata[0];
-    var webhooktoken = webhookdata[1];
-    console.log(webhookid)
-    console.log(webhooktoken)
-    var webhooklink = inputbox.value
-    responsetext.style.display = 'block'
-    inputbox.value = null
-    if (customizeEnabled == true) {
-        // Customization (Sends a message with custom username and avatar)
-        var message = messageInput.value
-        var username = usernameInput.value
-        var avatarurl = avatarInput.value
-        avatarInput.value = null
-        messageInput.value = null
-        usernameInput.value = null
-        disableCustomization()
-        console.log(message)
-        console.log(username)
-        console.log(avatarurl)
-        var data = {
-            "username": username,
-            "avatar_url": avatarurl,
-            "content": message,
-            "tts": true
+    whtype = await changeWebhookType()
+    console.log(whtype)
+    if (whtype === '1') {
+        console.log('submitted')
+        let webhookdata = await getID()
+        var webhookid = webhookdata[0];
+        var webhooktoken = webhookdata[1];
+        console.log(webhookid)
+        console.log(webhooktoken)
+        var webhooklink = inputbox.value
+        responsetext.style.display = 'block'
+        inputbox.value = null
+        if (customizeEnabled == true) {
+            // Customization (Sends a message with custom username and avatar)
+            var message = messageInput.value
+            var username = usernameInput.value
+            var avatarurl = avatarInput.value
+            avatarInput.value = null
+            messageInput.value = null
+            usernameInput.value = null
+            disableCustomization()
+            console.log(message)
+            console.log(username)
+            console.log(avatarurl)
+            var data = {
+                "username": username,
+                "avatar_url": avatarurl,
+                "content": message,
+                "tts": true
+            }
+            fetch(webhooklink, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: header
+        })
+        .then(response => response.json())
+        .catch(error => {
+            console.log(error)
+        })
         }
+        // Send a DELETE request to the webhook. If the response is 204, change the text to 'Successfully deleted'.
         fetch(webhooklink, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: header
-    })
-    .then(response => response.json())
-    .catch(error => {
-        console.log(error)
-    })
+            method: 'DELETE',
+            headers: header
+        })
+        .then(response => {
+            if (response.status == 204) {
+                responsetext.innerHTML = 'Successfully deleted'
+            } else {
+                responsetext.innerHTML = 'Failed to delete - Error ' + response.status + ' [' + response.statusText + ']'
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
-    // Send a DELETE request to the webhook. If the response is 204, change the text to 'Successfully deleted'.
-    fetch(webhooklink, {
-        method: 'DELETE',
-        headers: header
-    })
-    .then(response => {
-        if (response.status == 204) {
-            responsetext.innerHTML = 'Successfully deleted'
-        } else {
-            responsetext.innerHTML = 'Failed to delete - Error ' + response.status + ' [' + response.statusText + ']'
+    else if (whtype === '2') {
+        // Send a DELETE request to the webhook. If only the fields "deletedAt" and "id" are returned, change the text to 'Successfully deleted'.
+        let webhookdata = await getID()
+        var webhookid = webhookdata[0];
+        var webhooktoken = webhookdata[1];
+        console.log(webhookid)
+        console.log(webhooktoken)
+        var webhooklink = inputbox.value
+        responsetext.style.display = 'block'
+        inputbox.value = null
+        fetch(webhooklink, {
+            method: 'DELETE',
+            headers: header
+        })
+        .then(response => {
+            // If the response only returns the fields "deletedAt" and "id", change the text to 'Successfully deleted'.
+            if (response.deletedAt && response.id) {
+                responsetext.innerHTML = 'Successfully deleted'
+            }
+            else {
+                responsetext.innerHTML = 'Failed to delete - Error ' + response.status + ' [' + response.statusText + ']'
+            }
+        })
+        .catch(error => {
+            console.log(error)
         }
-    })
-    .catch(error => {
-        console.log(error)
-    })
+        )
+    }
+    
 
 }
 
@@ -112,3 +146,9 @@ inputbox.addEventListener('keypress', function(e) {
         webhookRequest()
     }
 })
+
+async function changeWebhookType() {
+    // Gets the webhook type from the dropdown menu
+    var selectedwhtype = webhookType.options[webhookType.selectedIndex].value
+    return selectedwhtype;
+}

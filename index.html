@@ -14,6 +14,10 @@
 <body>
     <div class="container">
         <div class="textdisplay">Paste the webhook link you would like to kill:</div>
+        <select name="webhookType" id="webhookType" onchange>
+            <option value="1">Discord</option>
+            <option value="2">Guilded</option>
+        </select>
         <input type="text" id="webhooklink" class="input" placeholder="https://discord.com/api/webhooks/" autofocus>
         <button class="sendbutton" id="sendbutton">Send request</button>
         <div class="responsedata" id="responsedata" style="display: none;">Awaiting response...</div>
