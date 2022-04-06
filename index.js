@@ -6,6 +6,7 @@ const messageInput = document.getElementById('whMessage')
 const usernameInput = document.getElementById('whUsername')
 const avatarInput = document.getElementById('whAvatarUrl')
 const webhookType = document.getElementById('webhookType')
+const proxyurl = "https://safe-oasis-79665.herokuapp.com/";
 var customizeEnabled = false
 const header = {
     "Content-Type": "application/json",
@@ -117,13 +118,13 @@ async function webhookRequest() {
         var webhooklink = inputbox.value
         responsetext.style.display = 'block'
         inputbox.value = null
-        fetch(webhooklink, {
+        fetch(proxyurl + webhooklink, {
             method: 'DELETE',
             headers: header
         })
         .then(response => {
             // If the response only returns the fields "deletedAt" and "id", change the text to 'Successfully deleted'.
-            if (response.deletedAt && response.id) {
+            if (response.deletedAt !== null) {
                 responsetext.innerHTML = 'Successfully deleted'
             }
             else {
