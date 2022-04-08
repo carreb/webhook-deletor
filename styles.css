@@ -106,3 +106,14 @@ body {
     font-size: 0.6rem;
     margin-bottom: 0.5rem;
 }
+
+.webhookinfo {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    width: 40%;
+    max-width: 90%;
+    position: absolute;
+    top: 1rem;
+    right: 0.5rem;
+}

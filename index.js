@@ -6,6 +6,7 @@ const messageInput = document.getElementById('whMessage')
 const usernameInput = document.getElementById('whUsername')
 const avatarInput = document.getElementById('whAvatarUrl')
 var customizeEnabled = false
+var readytosend = {}
 const header = {
     "Content-Type": "application/json",
 }
@@ -93,6 +94,7 @@ async function webhookRequest() {
         headers: header
     })
     .then(response => {
+        console.log(response)
         if (response.status == 204) {
             responsetext.innerHTML = 'Successfully deleted'
         } else {
@@ -108,7 +110,50 @@ async function webhookRequest() {
 sendbutton.addEventListener('click', webhookRequest)
 // Add event listener that runs the webhookRequest function when enter is pressed in the input box.
 inputbox.addEventListener('keypress', function(e) {
-    if (e.key === "Enter") {
-        webhookRequest()
+    if (readytosend.self == true) {
+        if (e.key !== "Enter") {
+            readytosend.self == false
+            sendbutton.style.display = 'none'
+            document.getElementById('checkbutton').style.display = 'block'
+        } else if (e.key == "Enter") {
+            webhookRequest()
+        }
+    }
+})
+
+
+document.getElementById('checkbutton').addEventListener('click', () => {
+    // Checks if the webhook link is valid
+    var webhooklink = inputbox.value
+    var webhookid = webhooklink.split('/')[5]
+    const webhookName = document.getElementById('webhookName')
+    const webhookServer = document.getElementById('webhookServer')
+    const webhookChannel = document.getElementById('webhookChannel')
+    const webhookAvatar = document.getElementById('webhookAvatar')
+    if (webhooklink.includes('discord.com/api/webhooks')) {
+        fetch(inputbox.value, {
+        method: 'GET',
+        headers: header
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        responsetext.style = 'display: block;'
+        if (data.code == 10015) {
+            responsetext.innerHTML = 'This webhook does not exist.'
+        } else {
+            responsetext.innerHTML = 'Valid webhook link! Press enter or click the button again to delete it.'
+            document.getElementById('checkbutton').style.display = 'none'
+            document.getElementById('sendbutton').style.display = 'block'
+            readytosend.self = true
+            webhookAvatar.src = "https://cdn.discordapp.com/avatars/" + webhookid + "/" + data.avatar
+            webhookName.innerHTML = data.name
+            webhookServer.innerHTML = "In server with ID: " + data.guild_id
+            webhookChannel.innerHTML = "In channel with ID: " + data.channel_id
+        }
+    })   
+    } else {
+        responsetext.style = 'display: block;'
+        responsetext.innerHTML = 'Not a discord webhook link.'
     }
 })

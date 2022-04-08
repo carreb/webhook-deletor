@@ -12,10 +12,18 @@
     <title>Webhook Killer</title>
 </head>
 <body>
+    <div class="webhookinfo" style="display: none;">
+        <p class="deletetext">You are about to delete:</p>
+        <img src="" alt="Webhook Avatar" id="webhookAvatar">
+        <p id="webhookName" class="whinfotext">Webhook Name:</p>
+        <p id="webhookChannel">Webhook Channel:</p>
+        <p id="webhookServer">Webhook Server ID:</p>
+    </div>
     <div class="container">
         <div class="textdisplay">Paste the webhook link you would like to kill:</div>
         <input type="text" id="webhooklink" class="input" placeholder="https://discord.com/api/webhooks/" autofocus>
-        <button class="sendbutton" id="sendbutton">Send request</button>
+        <button class="sendbutton" id="checkbutton">Check webhook validity</button>
+        <button class="sendbutton" id="sendbutton" style="display: none;">Send request</button>
         <div class="responsedata" id="responsedata" style="display: none;">Awaiting response...</div>
         <div class="checkdiv">
             <input type="checkbox" id="customize" class="checkbox"><label for="customize" class="checkbox">Customize</label>
