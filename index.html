@@ -12,6 +12,7 @@
     <title>Webhook Killer</title>
 </head>
 <body>
+    <!-- Info box. Displays webhook avatar, name, server id, and channel id. -->
     <div class="webhookinfo" style="display: none;" id="webhookinfo">
         <p class="deletetext">You are about to delete:</p>
         <img src="" alt="[NO AVATAR]" id="webhookAvatar">
@@ -19,16 +20,19 @@
         <p id="webhookChannel">Webhook Channel:</p>
         <p id="webhookServer">Webhook Server ID:</p>
     </div>
+    <!-- Main content. -->
     <div class="container">
         <div class="textdisplay">Paste the webhook link you would like to kill:</div>
         <input type="text" id="webhooklink" class="input" placeholder="https://discord.com/api/webhooks/" autofocus>
         <button class="sendbutton" id="checkbutton">Check webhook validity</button>
         <button class="sendbutton" id="sendbutton" style="display: none;">Send request</button>
         <div class="responsedata" id="responsedata" style="display: none;">Awaiting response...</div>
+        <!-- Customization checkbox -->
         <div class="checkdiv">
             <input type="checkbox" id="customize" class="checkbox"><label for="customize" class="checkbox">Customize</label>
             <p class="tinytext">*If left unchecked the webhook will silently delete itself</p>
         </div>
+        <!-- Customization options -->
         <input type="text" placeholder="Webhook Message" class="smallinput" id="whMessage" style="display: none;">
         <input type="text" placeholder="Webhook Username" class="smallinput" id="whUsername" style="display: none;">
         <input type="text" placeholder="Webhook Avatar URL" class="smallinput" id="whAvatarUrl" style="display: none;">
