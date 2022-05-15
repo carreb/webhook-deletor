@@ -117,4 +117,31 @@ body {
     position: absolute;
     top: 1rem;
     right: 0.5rem;
+    animation: infodropdown 1s;
+}
+
+.retract {
+    animation: inforetract 1s;
+}
+
+@keyframes infodropdown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+}
+
+@keyframes inforetract {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
 }

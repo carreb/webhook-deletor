@@ -49,12 +49,20 @@ async function getID() {
 
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function webhookRequest() {
     // Sets up for the webhook request
     console.log('submitted')
     document.getElementById('checkbutton').style.display = 'block'
     document.getElementById('sendbutton').style.display = 'none'
-    document.getElementsByClassName('webhookinfo')[0].style.display = 'none'
+    document.getElementsByClassName('webhookinfo')[0].classList.add('retract')
+    sleep(1000).then(() => {
+        document.getElementsByClassName('webhookinfo')[0].style.display = 'none'
+        document.getElementsByClassName('webhookinfo')[0].classList.remove('retract')
+    })
     readytosend.self = false
     let webhookdata = await getID()
     var webhookid = webhookdata[0];
